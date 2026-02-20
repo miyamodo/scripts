@@ -32,6 +32,11 @@ function signweb() {
         $.web = JSON.parse(data)
       } catch (e) {
         $.logErr(e, resp)
+        const preview = (data || '').slice(0, 200)
+        $.log(`JSON解析失败，响应前200字：${preview}`)
+        $.log(`这通常表示接口返回HTML（Cookie失效/缺sess/风控/跳转）`)
+        $.web = null
+        return $.notice($.name, '错误：接口未返回JSON', preview || String(e))
       } finally {
         resove()
       }
@@ -55,6 +60,11 @@ function signapp() {
         $.app = JSON.parse(data)
       } catch (e) {
         $.logErr(e, resp)
+        const preview = (data || '').slice(0, 200)
+        $.log(`JSON解析失败，响应前200字：${preview}`)
+        $.log(`这通常表示接口返回HTML（Cookie失效/缺sess/风控/跳转）`)
+        $.web = null
+        return $.notice($.name, '错误：接口未返回JSON', preview || String(e))
       } finally {
         resove()
       }
